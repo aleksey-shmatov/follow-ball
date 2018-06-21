@@ -1,20 +1,9 @@
-.control-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  button {
-    margin: 1rem;
-    font-weight: bold;
-    width: 32px;
-    height: 32px;
-    font-size: 20px;
-  }
-}
-
-.stats {
-  display: flex;
-  span {
-    margin-right: 2rem;
-  }
+.video-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: scroll;
 }
