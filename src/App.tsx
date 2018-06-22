@@ -2,11 +2,14 @@ import * as React from 'react';
 import VideoPlayer from './VideoPlayer';
 import { hot } from 'react-hot-loader';
 import './app.scss';
+import Context, { defaultValue } from 'Context';
 
 class App extends React.Component<{}> {
   render() {
     return (
-        <VideoPlayer/>);
+      <Context.Provider value={defaultValue}>
+        <VideoPlayer/>
+      </Context.Provider>);
   }
 }
 

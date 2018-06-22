@@ -1,36 +1,26 @@
 import * as React from 'react';
-import { VideoStats } from '../VideoLayer';
+import VideoStore from 'stores/VideoStore';
+import { observer } from 'mobx-react';
 import './info-panel.scss';
 
 type Props = {
-  stats: VideoStats,
-  currentFrame: number,
-  onChange: (newFrame: number) => void,
+  videoStore: VideoStore,
 };
 
+@observer
 class InfoPanel extends React.Component<Props> {
-  handlePrev = () => {
-    const newFrame = Math.max(this.props.currentFrame - 1, 0);
-    this.props.onChange(newFrame);
-  }
-
-  handleNext = () => {
-    const newFrame = Math.min(this.props.currentFrame + 1, this.props.stats.frameCount);
-    this.props.onChange(newFrame);
-  }
-
   handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFrame = Math.round(parseFloat(e.currentTarget.value) - 1);
-    this.props.onChange(newFrame);
+    this.props.videoStore.goToFrame(newFrame);
   }
 
   render() {
-    const { currentFrame, stats } = this.props;
+    const { currentFrame, stats, nextFrame, prevFrame, hasNextFrame, hasPrevFrame} = this.props.videoStore;
     const currentTime = (stats.frameRate !== 0)  ? currentFrame / stats.frameRate : 0;
     return (
       <div className="info-panel">
         <div className="control-bar">
-          <button disabled={currentFrame === 0} onClick={this.handlePrev}>{'<'}</button>
+          <button disabled={!hasPrevFrame} onClick={prevFrame}>{'<'}</button>
           <input
             type="range"
             value={currentFrame + 1}
@@ -38,7 +28,7 @@ class InfoPanel extends React.Component<Props> {
             max={stats.frameCount}
             onChange={this.handleSeek}
           />
-          <button disabled={currentFrame + 1 >= stats.frameCount} onClick={this.handleNext}>{'>'}</button>
+          <button disabled={!hasNextFrame} onClick={nextFrame}>{'>'}</button>
         </div>
         <div className="stats">
           <span>Frame: <strong>{currentFrame + 1}</strong> : {stats.frameCount}</span>
