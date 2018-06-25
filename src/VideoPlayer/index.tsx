@@ -2,8 +2,8 @@ import * as React from 'react';
 import VideoContainer from './VideoContainer';
 import InfoPanel from './InfoPanel/index';
 import Context from '../Context';
-import './video-player.scss';
 import KeyboardHandler from './KeyboardHandler';
+import './video-player.scss';
 
 class VideoPlayer extends React.Component<{}> {
 

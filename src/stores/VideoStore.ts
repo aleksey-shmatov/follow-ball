@@ -1,7 +1,20 @@
 import { observable, action, computed } from 'mobx';
-import { VideoStats } from './Model';
+import { VideoStats, FrameData } from './Model';
 
 class VideoStore {
+  @observable.shallow framesData = new Map<number, FrameData>();
+
+  @computed get frameData(): FrameData | null {
+    return this.framesData.get(this.currentFrame) || null;
+  }
+
+  @computed get prevFrameData(): FrameData | null {
+    if (this.currentFrame > 0) {
+      return this.framesData.get(this.currentFrame - 1) || null;
+    }
+    return null;
+  }
+
   @observable currentFrame = 0;
 
   @observable.shallow stats: VideoStats = {
@@ -11,6 +24,10 @@ class VideoStore {
     frameCount: 0,
     frameRate: 0,
   };
+
+  @action setFrameData(frameData: FrameData) {
+    this.framesData.set(this.currentFrame, frameData);
+  }
 
   @action
   loadVideo = (stats: VideoStats) => {

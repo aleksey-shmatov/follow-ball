@@ -1,11 +1,12 @@
 import { observable, action } from 'mobx';
-import { Mode, SELECT, ZOOM_IN, ZOOM_OUT } from './Model';
+import { Mode, SELECT, ZOOM_IN, ZOOM_OUT, PAN } from './Model';
 
 class ViewStore {
-
   @observable zoom = 1;
 
   @observable mode: Mode = SELECT;
+
+  private modeBeforePan: Mode = SELECT;
 
   @action
   zoomIn = () => {
@@ -30,6 +31,16 @@ class ViewStore {
   @action
   toggleSelect = () => {
     this.mode = SELECT;
+  }
+
+  @action
+  togglePan = () => {
+    if (this.mode !== PAN) {
+      this.modeBeforePan = this.mode;
+      this.mode = PAN;
+    } else {
+      this.mode = this.modeBeforePan;
+    }
   }
 }
 
