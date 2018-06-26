@@ -31,7 +31,7 @@ class GraphicsLayer extends React.Component<Props> {
     return (
       <g className="found-marker">
         <circle className="outer-circle" cx={x} cy={y} r={circle.r * scale}/>
-        <circle className="inner-circle" cx={x} cy={y} r={circle.r * scale}/>
+        <circle className={`inner-circle ${prev ? 'prev' : ''}`} cx={x} cy={y} r={circle.r * scale}/>
         {!prev && this.renderCross(x, y)}
       </g>
     );
@@ -51,7 +51,7 @@ class GraphicsLayer extends React.Component<Props> {
           height={rect.height * scale}
         />
         <rect
-          className="inner-rect"
+          className={`inner-rect ${prev ? 'prev' : ''}`}
           x={rect.x * scale}
           y={rect.y * scale}
           width={rect.width * scale}

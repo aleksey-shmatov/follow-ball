@@ -15,6 +15,10 @@
   .inner-circle {
     stroke: black;
     stroke-width: 1px;
+
+    &.prev {
+      stroke-dasharray: 10 , 5;
+    }
   }
 }
 
@@ -43,5 +47,9 @@
   .inner-rect {
     stroke: black;
     stroke-width: 1px;
+
+    &.prev {
+      stroke-dasharray: 2 , 2;
+    }
   }
 }
